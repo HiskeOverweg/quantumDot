@@ -18,10 +18,29 @@ barrier_w = 0.5
 barrier_h = 16
 pos_source = (xlim[0] -barrier_x)*0.5
 pos_drain = (xlim[1]+barrier_x)*0.5
-
-
 xpos = lambda x: -6*(x+10.52)
 ypos = lambda x: x*0.17
+
+I = np.loadtxt('I.txt')
+vsd = np.loadtxt('vsd.txt')
+vg = np.loadtxt('vg.txt')
+
+def measurement(ax):
+    plt.pcolormesh(vg,vsd,I,cmap=plt.cm.gray,vmin=0E-10,vmax=5E-10)
+    plt.xlim([-10.97,-10.05])
+    plt.ylim([-0.0075,0.0075])
+    cbar = plt.colorbar()
+    yticks = np.linspace(-0.0075,0.0075,7)
+    plt.yticks(yticks,(yticks*1E3))
+    xticks = np.linspace(-10.8,-10.2,4)
+    plt.xticks(xticks,xticks)
+    cticks = np.linspace(0,5E-10,6)
+    cbar.set_ticks(cticks)
+    cbar.set_ticklabels(cticks*1E9)
+    cbar.set_label('Current (nA)')
+    plt.xlabel(r'V$_\mathsf{gate}$ (V)')
+    plt.ylabel(r'V$_\mathsf{bias}$ (mV)')
+
 
 def fixed(ax):
     patches = []
